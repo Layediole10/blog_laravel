@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('name');
-            $table->string('name');
-            $table->string('name');
+            $table->string('title');
+            $table->string('description');
+            $table->date('publish_date');
+            $table->string('photo')->default(null);
+            $table->unsignedBigInteger('id_author');
+            $table->foreign('id_author')->references("id")->on("users");
             $table->timestamps();
         });
     }
