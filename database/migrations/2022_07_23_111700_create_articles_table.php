@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->date('publish_date');
+            $table->boolean('publish');
             $table->string('photo')->default(null);
             $table->unsignedBigInteger('id_author');
             $table->foreign('id_author')->references("id")->on("users");
