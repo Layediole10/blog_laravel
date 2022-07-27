@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\ArticleController;
+use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,4 +23,8 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     Route::resource('articles', ArticleController::class);
+});
+
+Route::prefix('admin')->group(function () {
+    Route::resource('users', UserController::class);
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -15,6 +16,8 @@ class UserController extends Controller
     public function index()
     {
         //
+        $users = User::all();
+        return view('admin.user.userList', ["users" => $users]);
     }
 
     /**
@@ -24,7 +27,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        //registration form
+        
+        return view('admin.user.userForm');
     }
 
     /**
@@ -36,6 +41,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'photo' => $request->photo,
+            'date_of_birth' => $request->dateOfBirth,
+            'role' => $request->role,            
+        ]);
+
+        $alert = "success adding!";
+        return view('admin.user.alert', compact('alert'));
     }
 
     /**

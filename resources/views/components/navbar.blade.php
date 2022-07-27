@@ -5,17 +5,17 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/blog_php/home">Home</a>
+              <a class="nav-link active" aria-current="page" href="/blogLaravel/public/admin/users/create">Home</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/blog_php/UserController">Article</a>
+              <a class="nav-link" href="/blogLaravel/public/admin/articles">Article</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/blog_php/UserController">Dashbord</a>
+              <a class="nav-link" href="/blogLaravel/public/">Dashbord</a>
             </li>                        
             <li class="nav-item">
-              <a class="nav-link" href="/blog_php/Authenticate/index">Login</a>
+              <a class="nav-link" href="#">Login</a>
             </li>
           </ul>
         </div>
