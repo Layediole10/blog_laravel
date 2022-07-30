@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -15,8 +16,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $posts = Article::all();
-        return view('admin.article.articleList', ["posts" => $posts]);
+        $articles = Article::all();
+        return view('admin.article.articleList', ["articles" => $articles]);
     }
 
     /**
@@ -26,8 +27,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //registration form
-        return view('formRegister');
+        //publish form
+        return view('admin.article.articleForm');
     }
 
     /**
@@ -38,7 +39,27 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation
+        $valid = $request->validate([
+            'title'=>'required|string|max:50',
+            'description' => 'required',
+            'photo'=>'mimes:jpg,svg,png|max:10240'
+        ]);
+
+        $article = $valid;
+        $article['publish'] = $request->description?true:false;
+        $article['id_author'] = Auth::user()->id;
+        if ($article['publish']) {
+            $article['publish_date'] = now();
+        }
+
+        $newArticle = Article::create($article);
+        if ($newArticle) {
+           return  redirect()->route('articles.index')->with(["status"=>"Article Added successfully"]);
+        }else{
+            return back()->with("error","Failed to create the Article")->withInput();
+        }
+
     }
 
     /**
@@ -58,9 +79,9 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
-        //
+        return view('admin.article.editArticle', ['article' => $article]);
     }
 
     /**
@@ -70,9 +91,32 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Article $article)
     {
-        //
+        //validation
+        $valid = $request->validate([
+
+            'title'=>'required|string|max:50',
+            'description' => 'required',
+            'photo'=>'mimes:jpg,svg,png|max:10240'
+        ]);
+
+        $editAticle = $valid;
+        $editAticle['publish'] = $request->description?true:false;
+        $editAticle['id_author'] = Auth::user()->id;
+        if ($editAticle['publish']) {
+            $editAticle['publish_date'] = now();
+        }
+
+        $article->update([
+
+            'title'=> $request->title,
+            'description' => $request->description,
+            'photo'=> $request->photo
+        ]);
+
+        return back()->with('successEdit', 'Article number '.$article->id.' edited successfully');
+
     }
 
     /**
@@ -81,8 +125,11 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        //
+
+        $article->delete();
+
+        return back()->with('successDelete', 'The article number '.$article->id.' deleted successfully!');
     }
 }

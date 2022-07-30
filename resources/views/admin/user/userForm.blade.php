@@ -1,4 +1,5 @@
 @extends('template.admin')
+@section('title', "user form")
 @section('content')
     <div class="container w-25">
         <form action="{{route('users.store')}}"  method="post">

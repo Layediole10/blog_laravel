@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\admin\ArticleController;
-use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +18,25 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return view('admin.adminHome');
+
+
+Route::get('/login', [AuthController::class, 'index']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::middleware('auth')->group(function(){
+
+    Route::get('/', function () {
+        return view('admin.adminHome');
+    });
+
+    Route::prefix('admin')->group(function () {
+        Route::resource('articles', ArticleController::class);
+    });
+    
+    Route::prefix('admin')->group(function () {
+        Route::resource('users', UserController::class);
+    });
+
 });
 
-Route::prefix('admin')->group(function () {
-    Route::resource('articles', ArticleController::class);
-});
-
-Route::prefix('admin')->group(function () {
-    Route::resource('users', UserController::class);
-});
