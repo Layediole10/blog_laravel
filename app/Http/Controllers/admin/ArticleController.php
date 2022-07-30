@@ -16,7 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::orderBy('title', 'asc')->paginate(5);
         return view('admin.article.articleList', ["articles" => $articles]);
     }
 
@@ -47,9 +47,24 @@ class ArticleController extends Controller
         ]);
 
         $article = $valid;
-        $article['publish'] = $request->description?true:false;
+        $article['publish'] = $request->publish?true:false;
         $article['id_author'] = Auth::user()->id;
+
+        // upload a image file
+        
+        if ($request->file('photo')) {
+
+            $file = $request->file('photo');
+            // Generate a file name with extension
+            $fileName = 'article-'.time().'.'.$file->getClientOriginalExtension();
+            // Save the file
+            $path = $file->storeAs('img', $fileName, 'public');
+            $article['photo'] = $path;
+        }
+
+        
         if ($article['publish']) {
+            
             $article['publish_date'] = now();
         }
 

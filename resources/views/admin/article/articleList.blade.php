@@ -30,7 +30,10 @@
     @endif
 
     <div class="card ">
-      <div class="card-header"> <h2>List of Articles</h2></div>
+        {{$articles->links()}}
+      <div class="card-header">
+         <h2>List of Articles</h2>
+        </div>
       <div class="card-body">
        
         <div class="table-responsive table-bordered">
@@ -43,6 +46,7 @@
                 <th scope="col">Id_author</th>
                 <th scope="col">Publish Date</th>
                 <th scope="col">Published</th>
+                <th scope="col">Photo</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -55,6 +59,19 @@
               <td>{{$article->id_author}}</td>
               <td>{{$article->publish_date}}</td>
               <td>{{$article->publish}}</td>
+              <td>
+                @if ($article->photo)
+                    @if (Str::contains($article->photo, 'https://'))
+                        <img src="{{$article->photo}}" alt="{{$article->title}}" width="50px">
+                        @else
+                            <img src="{{asset('storage/'.$article->photo)}}" alt="{{$article->title}}" width="50px">
+                    @endif
+                    @else
+                        <img src="{{asset('storage/img/default-image.png')}}" alt="{{$article->title}}" width="50px">
+                    
+                @endif
+                
+              </td>
               <td>
                 <a href="{{route('articles.edit', ['article'=>$article->id])}}" class="btn btn-success btn-sm" title="Edit"> <i class="bi bi-pencil"></i></a>               
 
