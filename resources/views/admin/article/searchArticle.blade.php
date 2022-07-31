@@ -17,7 +17,7 @@
         </a>
       </div>
     </div>
-    <form class="d-flex mb-3 w-50" role="search" action="{{route('search')}}" method="GET">
+    <form class="d-flex mb-3 w-50" role="search" action="" method="GET">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{request()->q ?? ''}}">
         <button class="btn btn-outline-success" type="submit" >Search</button>
     </form>
@@ -40,7 +40,7 @@
          <h2>List of Articles</h2>
         </div>
       <div class="card-body">
-        {{$articles->links()}}
+        {{$result->links()}}
        
         <div class="table-responsive table-bordered">
           <table class="table  table-sm">
@@ -57,7 +57,7 @@
               </tr>
             </thead>
             <tbody>
-            @foreach ($articles as $article)
+            @foreach ($result as $article)
             <tr>
               <td>{{$article->id}}</td>
               <td>{{$article->title}}</td>

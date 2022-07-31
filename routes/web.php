@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function(){
 
     Route::prefix('admin')->group(function () {
         Route::resource('articles', ArticleController::class);
+        Route::get('/searchArticle', [ArticleController::class, 'search'])->name('search');
     });
     
     Route::prefix('admin')->group(function () {

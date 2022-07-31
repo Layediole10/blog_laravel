@@ -85,7 +85,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -146,5 +146,13 @@ class ArticleController extends Controller
         $article->delete();
 
         return back()->with('successDelete', 'The article number '.$article->id.' deleted successfully!');
+    }
+
+    public function search()
+    {
+        $input = request()->input('q');
+        $result = Article::where('title', 'like', "%$input%")->orwhere('description', 'like', "%$input%")->paginate(5); 
+
+        return view('admin.article.searchArticle', ['result' => $result]);
     }
 }

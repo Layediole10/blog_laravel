@@ -10,13 +10,14 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
+
+          @auth
           <li class="nav-item">
             <a class="nav-link" href="/admin/articles">Articles</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/">Dashbord</a>
           </li>
-          @auth
             <li class="nav-item">
               <a class="nav-link btn btn-danger" href="{{route('logout')}}">Logout</a>
             </li>
@@ -27,7 +28,7 @@
               <a class="nav-link" href="{{route('login')}}">Login</a>
             </li>
           @endguest
-        
+
         </ul>
       </div>
     </div>
