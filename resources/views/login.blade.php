@@ -13,6 +13,11 @@
                         </ul>
                     </div>
                 @endif --}}
+                @if(session()->has('alertSuccess'))
+                <div class="alert alert-success">
+                    <h4>{{session()->get('alertSuccess')}}</h4>
+                </div>
+                @endif
 
                 <form action="{{route('login')}}" method="POST">
                     @csrf

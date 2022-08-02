@@ -2,7 +2,11 @@
 @section('content')
 
 
-        <h3>{{$alert}}</h3>
+@if(session()->has('alertSuccess'))
+<div class="alert alert-success">
+    <h4>{{session()->get('alertSuccess')}}</h4>
+</div>
+@endif
         
 
 @endsection

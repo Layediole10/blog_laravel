@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -16,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        $users = User::all();
+        $users = User::orderBy('last_name', 'asc')->paginate(5);
         return view('admin.user.userList', ["users" => $users]);
     }
 
@@ -40,18 +41,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'photo' => $request->photo,
-            'date_of_birth' => $request->dateOfBirth,
-            'role' => $request->role,            
+        $validated = $request->validate([
+            
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+            'password_confirmation' => 'required|same:password',
+
         ]);
 
-        $alert = "success adding!";
-        return view('admin.user.alert', compact('alert'));
+        $validated['password'] = Hash::make(request('password'));
+        $validated['activate'] = $request->activate?true:false;
+        $validated['role'] = $request->role?'admin':'user';
+        $validated['date_of_birth'] = $request->dateOfBirth;
+
+        if ($request->file('photo')) {
+            
+            $file = $request->file('photo');
+            $fileName = 'user-'.time().'.'.$file->getClientOriginalExtension();
+            $path = $file->storeAs('imgUser', $fileName, 'public');
+            $validated['photo'] = $path;
+        }
+    //    dd($validated);
+
+        $userRegister = User::create($validated);
+
+        if ($userRegister) {
+            return  redirect()->route('login')->with(["alertSuccess"=>"registration completed successfully, you can login!"]);
+        
+         }else{
+             return back()->with("errorRegister","registration failed")->withInput();
+            }
     }
 
     /**
