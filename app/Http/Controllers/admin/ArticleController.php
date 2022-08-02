@@ -121,12 +121,15 @@ class ArticleController extends Controller
         ]);
 
         $editAticle = $valid;
-        $editAticle['publish'] = $request->description?true:false;
+        $editAticle['publish'] = $request->publish?true:false;
         $editAticle['id_author'] = Auth::user()->id;
         $editAticle['title'] = $request->title;
         $editAticle['description']= $request->description;
+
         if ($editAticle['publish']) {
             $editAticle['publish_date'] = now();
+        }else{
+            $editAticle['publish_date'] = null;
         }
 
         if ($request->file('photo')) {
@@ -169,7 +172,7 @@ class ArticleController extends Controller
         return view('admin.article.searchArticle', ['result' => $result]);
     }
 
-    public function publish(Article $article, $id)
+    public function publish($id)
     {
 
         $article = Article::find($id);
@@ -177,14 +180,11 @@ class ArticleController extends Controller
         $article->publish = !$article->publish ;
         $message = "";
         if ($article['publish']) {
-            $article['publication_date'] = now();
-            // $message = "Article published successfully";
-            return back()->with('state', 'The article '.$article->id.' published successfully!');
+            $article['publish_date'] = now();
+            $message = "Article $article->id published successfully";            
         }else{
-            $article['publication_date'] = null;
-            // $message = "Article unpublished successfully";
-            return back()->with('state', 'The article '.$article->id.' unpublished successfully!');
-
+            $article['publish_date'] = null;
+            $message = "Article $article->id unpublished successfully";
         }
         
         if($article->update()){

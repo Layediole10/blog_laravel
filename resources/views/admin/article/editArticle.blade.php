@@ -75,7 +75,7 @@
             </div>
             <div class="col">
               <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" checked="{{$article->publish}}" name="publish"  role="switch" id="publish">
+                <input class="form-check-input" type="checkbox"  name="publish"  role="switch" id="publish">
                 <label class="form-check-label" for="publish">Published</label>
               </div>
             </div>
