@@ -27,7 +27,9 @@ class AuthController extends Controller
  
             return redirect()->intended('/');
         }
-        return "Error of connection";
+            return back()->withErrors([
+                'email'=>"The provided credentials do not match our records."
+            ])->onlyInput('email');
     }
 
     public function logout(Request $request){

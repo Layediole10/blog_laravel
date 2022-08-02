@@ -29,7 +29,7 @@
 
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Add new Article</h4>
+        <h4 class="card-title">Edit Article</h4>
       </div>
       <div class="card-body">
         <form action="{{route('articles.update', ['article'=>$article->id])}}" method="post" enctype="multipart/form-data">
@@ -75,7 +75,7 @@
             </div>
             <div class="col">
               <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" name="publish"  role="switch" id="publish">
+                <input class="form-check-input" type="checkbox" checked="{{$article->publish}}" name="publish"  role="switch" id="publish">
                 <label class="form-check-label" for="publish">Published</label>
               </div>
             </div>

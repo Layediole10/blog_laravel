@@ -34,6 +34,12 @@
         </div>
     @endif
 
+    @if (session('state'))
+      <div class="alert alert-success">
+          <h4>{{session('state')}}</h4>
+      </div>
+    @endif
+
     <div class="card ">
         
       <div class="card-header">
@@ -64,17 +70,34 @@
               <td>{{ Str::limit($article->description,'30') }}</td>
               <td>{{$article->id_author}}</td>
               <td>{{$article->publish_date}}</td>
-              <td>{{$article->publish}}</td>
+              <td>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" onchange="if(confirm('Are you sure to change the state of this article?')){
+                    document.getElementById('publish-{{$article->id}}').submit();
+                    }" type="checkbox" @if ($article->publish)
+                      checked
+                    @endif name="publish"  role="switch" id="publish">
+                </div>
+                <form id="publish-{{$article->id}}" action="{{route("articles.publish",['id'=>$article->id])}}" method="post">
+                  @csrf
+                  @method('put')
+                </form> 
+              </td>
               <td>
                 @if ($article->photo)
                     @if (Str::contains($article->photo, 'https://'))
+                    <a href="{{route('articles.show', ['article'=>$article->id])}}">
                         <img src="{{$article->photo}}" alt="{{$article->title}}" width="50px">
+                    </a>    
                         @else
+                          <a href="{{route('articles.show', ['article'=>$article->id])}}">
                             <img src="{{asset('storage/'.$article->photo)}}" alt="{{$article->title}}" width="50px">
-                    @endif
+                          </a>
+                      @endif
                     @else
+                      <a href="{{route('articles.show', ['article'=>$article->id])}}">
                         <img src="{{asset('storage/img/default-image.png')}}" alt="{{$article->title}}" width="50px">
-                    
+                      </a>
                 @endif
                 
               </td>

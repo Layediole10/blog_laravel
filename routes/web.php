@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function(){
     Route::prefix('admin')->group(function () {
         Route::resource('articles', ArticleController::class);
         Route::get('/searchArticle', [ArticleController::class, 'search'])->name('search');
+        Route::get('/articles/publish', [ArticleController::class, 'pulish'])->name('articles.publish');
     });
     
     Route::prefix('admin')->group(function () {

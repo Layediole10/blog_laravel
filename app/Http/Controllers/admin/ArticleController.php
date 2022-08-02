@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Article;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -85,7 +86,10 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        
+        $showArticle = Article::findOrFail($id);
+        return view('admin.article.showArticle', [
+            'showArticle' => $showArticle
+        ]);        
     }
 
     /**
@@ -119,16 +123,24 @@ class ArticleController extends Controller
         $editAticle = $valid;
         $editAticle['publish'] = $request->description?true:false;
         $editAticle['id_author'] = Auth::user()->id;
+        $editAticle['title'] = $request->title;
+        $editAticle['description']= $request->description;
         if ($editAticle['publish']) {
             $editAticle['publish_date'] = now();
         }
 
-        $article->update([
+        if ($request->file('photo')) {
 
-            'title'=> $request->title,
-            'description' => $request->description,
-            'photo'=> $request->photo
-        ]);
+            $file = $request->file('photo');
+            // Generate a file name with extension
+            $fileName = 'article-'.time().'.'.$file->getClientOriginalExtension();
+            // Save the file
+            $path = $file->storeAs('img', $fileName, 'public');
+            $editAticle['photo'] = $path;
+        }
+
+
+        $article->update($editAticle);
 
         return back()->with('successEdit', 'Article number '.$article->id.' edited successfully');
 
@@ -151,8 +163,34 @@ class ArticleController extends Controller
     public function search()
     {
         $input = request()->input('q');
+
         $result = Article::where('title', 'like', "%$input%")->orwhere('description', 'like', "%$input%")->paginate(5); 
 
         return view('admin.article.searchArticle', ['result' => $result]);
+    }
+
+    public function publish(Article $article, $id)
+    {
+
+        $article = Article::find($id);
+
+        $article->publish = !$article->publish ;
+        $message = "";
+        if ($article['publish']) {
+            $article['publication_date'] = now();
+            // $message = "Article published successfully";
+            return back()->with('state', 'The article '.$article->id.' published successfully!');
+        }else{
+            $article['publication_date'] = null;
+            // $message = "Article unpublished successfully";
+            return back()->with('state', 'The article '.$article->id.' unpublished successfully!');
+
+        }
+        
+        if($article->update()){
+            return  redirect()->route('articles.index')->with(["state"=>$message]);
+        }else{
+            return back()->with("error","Failed to edit the Article")->withInput();
+        }
     }
 }
