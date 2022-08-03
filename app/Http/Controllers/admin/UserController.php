@@ -83,7 +83,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $userShow = User::findOrFail($id);
+        return view('admin.user.showUser', ['userShow'=>$userShow]);
     }
 
     /**
@@ -94,7 +95,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $userEdit = User::findOrFail($id);
+        return view('admin.user.editUser', ['userEdit'=>$userEdit]);
     }
 
     /**
@@ -106,7 +108,41 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $userUpdate = User::findOrFail($id);
+        $updated = $request->validate([
+            
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+            'password_confirmation' => 'required|same:password',
+
+        ]);
+
+        $updated['password'] = Hash::make(request('password'));
+        $updated['activate'] = $request->activate?true:false;
+        $updated['role'] = $request->role?'admin':'user';
+        $updated['date_of_birth'] = $request->dateOfBirth;
+
+        if ($request->file('photo')) {
+            
+            $file = $request->file('photo');
+            $fileName = 'user-'.time().'.'.$file->getClientOriginalExtension();
+            $path = $file->storeAs('imgUser', $fileName, 'public');
+            $updated['photo'] = $path;
+        }
+    //    dd($updated);
+        
+        $userUpdate->update($updated);
+
+        if ($userUpdate) {
+            return  redirect()->route('users.index')->with('alertUpdate','The user number '. $userUpdate->id. ' updated successfully!');
+        
+         }else{
+             return back()->with("errorRegister","registration failed")->withInput();
+            }
+
     }
 
     /**
@@ -117,6 +153,35 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $userDelete = User::findOrFail($id);
+       $userDelete->delete();
+       return back()->with('alertDelete', 'The user '.$userDelete->first_name.' '.$userDelete->first_name.' deleted successfully!');
+    }
+
+    public function search()
+    {
+        $input = request('q');
+        $userSearch = User::where('first_name', 'like', "%$input%")->orwhere('last_name', 'like', "%$input%")->paginate(5);
+        return view('admin.user.searchUser', ['userSearch'=>$userSearch]);
+    }
+
+    public function activate($id)
+    {
+        $userActivate = User::findOrFail($id);
+        $userActivate->activate = !$userActivate->activate;
+        $message = "";
+        if ($userActivate['activate']) {
+            $userActivate['activate'] = true;
+            $message = "The account of user number $userActivate->id activated successfully";
+        } else {
+            $userActivate['activate'] = false;
+            $message = "The account of user number $userActivate->id desabled successfully";
+        }
+        
+        if($userActivate->update()){
+            return  redirect()->route('users.index')->with(["state"=>$message]);
+        }else{
+            return back()->with("error","Failed to activate the count of the user");
+        }
     }
 }

@@ -46,7 +46,7 @@
          <h2>List of Users</h2>
         </div>
       <div class="card-body">
-        {{$users->links()}}
+        {{$userSearch->links()}}
        
         <div class="table-responsive table-bordered">
           <table class="table  table-sm">
@@ -64,7 +64,7 @@
               </tr>
             </thead>
             <tbody>
-            @foreach ($users as $user)
+            @foreach ($userSearch as $user)
             <tr>
               <td>{{$user->id}}</td>
               <td>{{Str::ucfirst($user->first_name)}}</td>
@@ -74,13 +74,13 @@
               <td>{{$user->role}}</td>
               <td>
                 <div class="form-check form-switch">
-                  <input class="form-check-input" onchange="if(confirm('Are you sure to change the state of this user?')){
+                  <input class="form-check-input" onchange="if(confirm('Are you sure to change the state of this account?')){
                     document.getElementById('activate-{{$user->id}}').submit();
                     }" type="checkbox" @if ($user->activate)
                       checked
-                    @endif name="activate"  role="switch" id="activate">
+                    @endif name="activate"  role="switch">
                 </div>
-                <form id="activate-{{$user->id}}" action="{{route('users.activate',['id'=>$user->id])}}" method="post">
+                <form id="activate-{{$user->id}}" action="{{route('users.activate',['user', $user->id])}}" method="post">
                   @csrf
                   @method('put')
                 </form> 

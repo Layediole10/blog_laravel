@@ -39,7 +39,7 @@
           <div class="row my-2">
             <div class="col">
               <div class="form-group">
-                <input type="text" class="form-control  @error('title')is-invalid @enderror" name="title" placeholder="Post Title" value="{{$article->title}}" >
+                <input type="text" class="form-control  @error('title') is-invalid @enderror" name="title" placeholder="Post Title" value="{{$article->title}}" >
                 @error('title')
                 <div class="alert alert-danger">
                  {{$message}}

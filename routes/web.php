@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function(){
     
     Route::prefix('admin')->group(function () {
         Route::resource('users', UserController::class);
+        Route::put("users/{id}/activate", [UserController::class, "activate"])->name("users.activate");
+        Route::get('/searchUser', [UserController::class, 'search'])->name('search');
     });
 
 });
