@@ -1,7 +1,7 @@
-@extends('template.admin')
+@extends('template.user')
 @section('title', "user form")
 @section('content')
-    <div class="container w-25">
+    <div class="container card mt-3 p-4 shadow" style="width: 25rem;">
 
 
 

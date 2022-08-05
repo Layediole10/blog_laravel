@@ -21,7 +21,7 @@ class Comment extends Model
      * 
      * @return comment
      */
-    public function articles(){
+    public function article(){
         return $this->belongsTo(Article::class);
     }
 }

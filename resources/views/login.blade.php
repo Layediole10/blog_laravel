@@ -1,8 +1,8 @@
 @extends('template.user')
 @section('title', "Login")
 @section('content')
-    <div class="container">
-        <div class="card mx-auto" style="width: 25rem;">
+    <div class="container mt-5">
+        <div class="card mx-auto shadow" style="width: 25rem;">
             <div class="card-body">
                 {{-- @if ($errors->any())
                     <div class="alert alert-danger">

@@ -17,7 +17,7 @@
         </a>
       </div>
     </div>
-    <form class="d-flex mb-3 w-50" role="search" action="{{route('search')}}" method="GET">
+    <form class="d-flex mb-3 w-50" role="search" action="{{route('articles.search')}}" method="GET">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{request()->q ?? ''}}">
         <button class="btn btn-outline-success" type="submit" >Search</button>
     </form>

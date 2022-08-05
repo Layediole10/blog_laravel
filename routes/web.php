@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\ArticleController;
+use App\Http\Controllers\ArticleController as ControllersArticleController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -35,7 +36,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 //---------------------------------------------------------
 
 
-
+Route::get('/',  [ControllersArticleController::class, 'index'])->name('home');
+Route::get('admin/{id}/show',  [ControllersArticleController::class, 'show'])->name('show');
 Route::get('/login', [AuthController::class, 'index']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -43,21 +45,21 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth')->group(function(){
 
-    Route::get('/', function () {
+    Route::get('/admin', function () {
         return view('admin.adminHome');
     });
 
     Route::prefix('admin')->group(function () {
         Route::resource('articles', ArticleController::class);
         Route::put("articles/{id}/publish", [ArticleController::class, "publish"])->name('articles.publish');
-        Route::get('/searchArticle', [ArticleController::class, 'search'])->name('search');
-    });
-    
-    Route::prefix('admin')->group(function () {
+        Route::get('/searchArticle', [ArticleController::class, 'search'])->name('articles.search');
+
         Route::resource('users', UserController::class);
         Route::put("users/{id}/activate", [UserController::class, "activate"])->name("users.activate");
-        Route::get('/searchUser', [UserController::class, 'search'])->name('search');
+        Route::get('/searchUser', [UserController::class, 'search'])->name('users.search');
     });
+    
+
 
 });
 

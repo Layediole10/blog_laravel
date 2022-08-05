@@ -8,18 +8,18 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
           </li>
 
           @auth
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/articles">Articles</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/">Dashbord</a>
-          </li>
             <li class="nav-item">
-              <a class="nav-link btn btn-danger" href="{{route('logout')}}">Logout</a>
+              <a class="nav-link" href="/admin/articles">Articles</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Dashbord</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-danger" href="{{route('logout')}}">Logout</a>
             </li>
           @endauth
           
