@@ -21,4 +21,6 @@ class ArticleController extends Controller
             'showArticle' => $showArticle
         ]);        
     }
+
+    
 }

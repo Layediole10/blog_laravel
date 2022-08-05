@@ -1,7 +1,7 @@
 @extends('template.user')
 @section('title', "Login")
 @section('content')
-    <div class="container mt-5">
+    <div class="container m-5">
         <div class="card mx-auto shadow" style="width: 25rem;">
             <div class="card-body">
                 {{-- @if ($errors->any())

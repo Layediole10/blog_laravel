@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function(){
         return view('admin.adminHome');
     });
 
+    
+
     Route::prefix('admin')->group(function () {
         Route::resource('articles', ArticleController::class);
         Route::put("articles/{id}/publish", [ArticleController::class, "publish"])->name('articles.publish');

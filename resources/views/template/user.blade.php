@@ -10,14 +10,58 @@
     
 </head>
 <body>
-  <x-navbar/>
+  {{-- <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">My Blog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
 
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          @guest
+          <li class="nav-item">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none mx-3">
+              <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+              <strong>abdoulaye</strong>
+            </a>
+          </li>              
+          @endguest
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
+          </li>
+
+          @auth
+
+            <li class="nav-item">
+                <a class="nav-link btn btn-danger" href="{{route('logout')}}">Logout</a>
+            </li>
+          @endauth
+          
+          @guest
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('login')}}">Login</a>
+            </li>
+          @endguest
+
+        </ul>
+      </div>
+    </div>
+  </nav> --}}
+  <x-navbar/>
   <div class="container-fluid">
     <div class="row">
+      {{-- <h1>Bienvenu!</h1> --}}
       <div class="col">
         @yield('content')
       </div>
-      <x-footer/>
+      <hr>
+      <footer>
+        <p align="center">
+            Blog made by FS-08
+        </p>
+    </footer>
     </div>
   </div>
 

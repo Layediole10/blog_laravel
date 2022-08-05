@@ -17,7 +17,12 @@
     <div class="col">
       @yield('content')
     </div>
-
+    <hr>
+    <footer>
+      <p align="center">
+          Blog made by FS-08
+      </p>
+  </footer>
   </div>
 </div>
       

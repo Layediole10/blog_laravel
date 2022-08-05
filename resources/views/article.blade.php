@@ -4,7 +4,7 @@
     @foreach ($articleList as $article)
         @if ($article->publish === 1)
             <div class="d-inline-flex m-3">                
-                <div class="card shadow" style="width: 18rem;">
+                <div class="card" style="width: 18rem;">
                     <a href="{{route('show',['id'=>$article->id])}}">
                         <img src="{{$article->photo}}" class="card-img-top" alt="{{$article->title}}">
                     </a>

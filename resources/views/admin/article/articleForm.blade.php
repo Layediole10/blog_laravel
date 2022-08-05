@@ -14,8 +14,8 @@
         </a>
       </div>
     </div>
-
-    @if (session('error'))
+  <div class="card mx-auto shadow" style="width: 25rem;">
+      @if (session('error'))
       <div class="alert alert-danger">
         {{session('error')}}
       </div>
@@ -77,5 +77,7 @@
     
       </div>
     </div>
+    </div>
+
 </main>
 @endsection
