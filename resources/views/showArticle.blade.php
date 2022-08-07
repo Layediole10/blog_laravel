@@ -28,7 +28,10 @@
             <div>
                 <h3 class="card-title ">{{$showArticle->title}}</h3>
                 <p class="card-text">{{$showArticle->description}}</p>
-                <p><em>Published : {{$showArticle->publish_date}}</em></p>
+                <div class="text-end">
+                    <p><small><em>Published : {{$showArticle->publish_date}}</em></small></p>
+                    <p><small><em>Author : {{$showArticle->author->first_name.' '.$showArticle->author->last_name}}</em></small></p>
+                </div>
             </div>
               
               {{-- <p><em>{{$showArticle->author->first_name.' '.$showArticle->author->last_name}}</em></p> --}}

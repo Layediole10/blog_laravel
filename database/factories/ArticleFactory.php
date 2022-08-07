@@ -24,7 +24,7 @@ class ArticleFactory extends Factory
             "publish_date" => now(),
             "publish" => true,
             "photo" => $this->faker->imageUrl(),
-            "id_author" => Arr::random([1,2,3,4]),
+            "author_id" => Arr::random([1,2,3,4]),
            
         ];
     }

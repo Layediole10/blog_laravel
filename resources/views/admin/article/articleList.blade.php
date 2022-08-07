@@ -68,13 +68,11 @@
               <td>{{$article->id}}</td>
               <td>{{$article->title}}</td>
               <td>{{ Str::limit($article->description,'30') }}</td>
-              <td>{{$article->id_author}}</td>
+              <td>{{$article->author->first_name.' '.$article->author->last_name}}</td>
               <td>{{$article->publish_date}}</td>
               <td>
                 <div class="form-check form-switch">
-                  <input class="form-check-input" onchange="if(confirm('Are you sure to change the state of this article?')){
-                    document.getElementById('publish-{{$article->id}}').submit();
-                    }" type="checkbox" @if ($article->publish)
+                  <input class="form-check-input" onchange="if(confirm('Are you sure to change the state of this article?')){document.getElementById('publish-{{$article->id}}').submit();}" type="checkbox" @if ($article->publish)
                       checked
                     @endif name="publish"  role="switch" id="publish">
                 </div>

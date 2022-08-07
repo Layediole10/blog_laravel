@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string("photo")->nullable();
             $table->date("publish_date")->nullable();
             $table->boolean("publish")->default(false);
-            $table->unsignedBigInteger("id_author");
-            $table->foreign("id_author")->references("id")->on("users");
+            $table->unsignedBigInteger("author_id");
+            $table->foreign("author_id")->references("id")->on("users");
             $table->timestamps();
         });
     }

@@ -4,15 +4,11 @@
     <div class="container m-5">
         <div class="card mx-auto shadow" style="width: 25rem;">
             <div class="card-body">
-                {{-- @if ($errors->any())
+                @if (session('error'))
                     <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                      <h4>{{session('error')}}</h4> 
                     </div>
-                @endif --}}
+                @endif
                 @if(session()->has('alertSuccess'))
                 <div class="alert alert-success">
                     <h4>{{session()->get('alertSuccess')}}</h4>
