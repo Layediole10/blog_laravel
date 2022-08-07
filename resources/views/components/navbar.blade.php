@@ -8,26 +8,26 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           @auth
-          <li class="nav-item">
-              @if (Auth::user()->photo)
-                @if (Str::contains(Auth::user()->photo, 'https://'))
-                  <a href="#" class="nav-link active">
-                      <img src="{{Auth::user()->photo}}" alt="" width="32" height="32" class="rounded-circle me-2">
-                      <strong>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</strong>
-                  </a>    
-                    @else
-                      <a href="#" class="nav-link active">
-                        <img src="{{asset('storage/'.Auth::user()->photo)}}" alt="" width="32" height="32" class="rounded-circle me-2">
+            <li class="nav-item">
+                @if (Auth::user()->photo)
+                  @if (Str::contains(Auth::user()->photo, 'https://'))
+                    <a href="#" class="nav-link active">
+                        <img src="{{Auth::user()->photo}}" alt="" width="32" height="32" class="rounded-circle me-2">
                         <strong>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</strong>
-                      </a>
+                    </a>    
+                      @else
+                        <a href="#" class="nav-link active">
+                          <img src="{{asset('storage/'.Auth::user()->photo)}}" alt="" width="32" height="32" class="rounded-circle me-2">
+                          <strong>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</strong>
+                        </a>
+                  @endif
+                  @else
+                    <a href="#" class="nav-link active">
+                      <img src="{{asset('storage/img/default-image.png')}}" alt="" width="32" height="32" class="rounded-circle me-2">
+                      <strong>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</strong>
+                    </a>
                 @endif
-                @else
-                  <a href="#" class="nav-link active">
-                    <img src="{{asset('storage/img/default-image.png')}}" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</strong>
-                  </a>
-              @endif
-          </li>
+            </li>
           @endauth
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
