@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -14,7 +15,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::all();
+        return view('admin.comment.commentList', ['comments'=>$comments]);
     }
 
     /**
@@ -24,7 +26,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        // return view('showArticle');
     }
 
     /**

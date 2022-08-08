@@ -2,7 +2,7 @@
 @extends('template.home')
 
 @section("home-content")
-<main class="col-md-9 m-auto col-lg-10 w-100">
+<main class="container col-md-9 mx-auto col-lg-10 w-100">
   
 
 {{-- <div class="container mx-5"> --}}
@@ -38,6 +38,80 @@
            
         </div>
 
+    </div>
+
+    <div class="container text-left w-50 m-2">
+        <h6>Commentaires</h6>
+        {{-- <form action="/posts/{{ $post->id }}/comments" method="POST" class="mb-0"> --}}
+        <form action="{{route('comments.store',['id'=>$showArticle->id])}}" method="post">
+            @csrf
+            <div class="row my-2 p-2">
+                <div class="col">
+                    <div class="form-group pb-1">
+                        <input type="text" class="form-control" name="first_name" placeholder="first name">
+                    </div>
+                    <div class="form-group pb-1">
+                        <input type="text" class="form-control" name="last_name" placeholder="last name">
+                    </div>
+                    <div class="form-group pb-1">
+                        <input type="email" class="form-control" name="email" placeholder="email">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row my-2">
+                <div class="form-floating">
+                    <textarea class="form-control" name="message" placeholder="Leave a comment here"></textarea>                            
+                </div>
+                <div class="form-group pb-1">
+                    <input type="hidden" class="form-control" name="article_id" placeholder="last name" value={{$showArticle->id}}>
+                </div>
+            </div>
+    
+            <button class="btn btn-md btn-primary"> <i class="bi bi-plus-circle"></i> Save</button>
+        </form>
+
+        <div class="container mt-3 ">
+            @foreach ($comments as $comment)
+                <div class="mb-5 bg-white p-3 rounded-sm text-left w-75 shadow">
+                    <div class="flex">
+                        {{-- Avatar --}}
+                        <div class="mr-3 flex flex-col justify-center">
+                            <div class="d-inline-flex">
+                                <?php
+                                    $parts    = explode(' ', $comment->first_name.' '.$comment->last_name );
+                                    $initials = strtoupper($parts[0][0] . $parts[count($parts) - 1][0]);
+                                    // print_r($parts);
+                                ?>
+
+                                <span class="badge rounded-pill text-bg-secondary p-2">{{ $initials }}</span>
+                                <h6 class="mx-2">{{ $comment->first_name.' '.$comment->last_name }}</h6>
+                            </div>
+                        </div>
+                        {{-- Avatar --}}
+
+                        <div class="flex flex-col justify-center">
+                            
+                            <small class="text-gray-600"><em>{{ $comment->created_at}}</em></small>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <p>{{ $comment->message }}</p>
+                    </div> 
+                    
+                    
+                    {{-- <form id="comment-{{$comment->id}}" action="{{route('comments.delete',['id'=>$comment->id])}}" method="post">
+                        @csrf
+                        @method('delete')
+
+                        <button type="submit" onclick="if(confirm('Are you sure to delete this comment?')){document.getElementById('comment-{{$comment->id}}').submit();}" class="border-white bg-white"><i class="bi bi-trash"></i></button>
+                        
+                    </form> --}}
+                </div>    
+                    
+            @endforeach
+        </div>
     </div>
 {{-- </div> --}}
 

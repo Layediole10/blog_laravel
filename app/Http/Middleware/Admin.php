@@ -25,7 +25,7 @@ class Admin
             return $next($request);
         }
         return redirect('/login')->with(
-            'error', "The provided credentials do not match our records."
+            'error', "Vous n'êtes pas un admin!."
         );
     }
 }

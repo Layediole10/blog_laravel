@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -50,7 +51,7 @@ class ArticleController extends Controller
 
         $article = $valid;
         $article['publish'] = $request->publish?true:false;
-        $article['id_author'] = Auth::user()->id;
+        $article['author_id'] = Auth::user()->id;
 
         // upload a image file
         
@@ -88,8 +89,10 @@ class ArticleController extends Controller
     public function show($id)
     {
         $showArticle = Article::findOrFail($id);
+        
         return view('admin.article.showArticle', [
-            'showArticle' => $showArticle
+            'showArticle' => $showArticle,
+            
         ]);        
     }
 

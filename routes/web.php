@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\ArticleController;
+use App\Http\Controllers\admin\CommentController;
 use App\Http\Controllers\ArticleController as ControllersArticleController;
+use App\Http\Controllers\CommentController as ControllersCommentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -17,23 +19,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-//veriification email
-// Route::get('/email/verify', function () {
-//     return view('auth.verify-email');
-// })->middleware('auth')->name('verification.notice');
-
-// Route::get('/email/verify', function () {
-//     return view('auth.verify-email');
-// })->middleware('auth')->name('verification.notice');
-
-
-// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//     $request->fulfill();
- 
-//     return redirect('/home');
-// })->middleware(['auth', 'signed'])->name('verification.verify');
-//---------------------------------------------------------
 
 
 Route::get('/',  [ControllersArticleController::class, 'index'])->name('home');
@@ -49,8 +34,6 @@ Route::middleware(['auth', 'admin'])->group(function(){
         return view('admin.adminHome');
     });
 
-    
-
     Route::prefix('admin')->group(function () {
         Route::resource('articles', ArticleController::class);
         Route::put("articles/{id}/publish", [ArticleController::class, "publish"])->name('articles.publish');
@@ -59,9 +42,11 @@ Route::middleware(['auth', 'admin'])->group(function(){
         Route::resource('users', UserController::class);
         Route::put("users/{id}/activate", [UserController::class, "activate"])->name("users.activate");
         Route::get('/searchUser', [UserController::class, 'search'])->name('users.search');
+  
+        // Route::resource('comments', CommentController::class);
     });
     
-
-
 });
 
+Route::post('/admin/articles/{id}/comments', [ControllersCommentController::class, 'store'])->name('comments.store');
+Route::delete('/admin/comments/{id}', [ControllersCommentController::class, 'destroy'])->name('comments.delete');

@@ -46,6 +46,30 @@
               </p> --}}
             </div>
           </div>
+                <form action="{{route('comments.store')}}" method="post">
+                    @csrf
+                    <div class="row my-2 p-2">
+                        <div class="col">
+                            <div class="form-group pb-1">
+                                <input type="text" class="form-control" name="first_name" placeholder="first name">
+                            </div>
+                            <div class="form-group pb-1">
+                                <input type="text" class="form-control" name="last_name" placeholder="last name">
+                            </div>
+                            <div class="form-group pb-1">
+                                <input type="email" class="form-control" name="email" placeholder="email">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row my-2">
+                        <div class="form-floating">
+                            <textarea class="form-control" name="comment" placeholder="Leave a comment here"></textarea>                            
+                        </div>
+                    </div>
+
+                    <button class="btn btn-md btn-primary"> <i class="bi bi-plus-circle"></i> Save</button>
+                </form>
  
 </main>
 @endsection
