@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+
 use App\Models\Comment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class CommentController extends Controller
 {
     public function index(){
-        $comments = Comment::all();
-        return view('showArticle', [
+        $comments = Comment::paginate(3);
+        return view('admin.comment.commentList', [
             'comments'=> $comments,
             // 'showArticle'=> $showArticle,
         ]);
@@ -40,4 +40,6 @@ class CommentController extends Controller
         $deleteComment->delete();
         return back();
     }
+
+
 }

@@ -23,6 +23,7 @@ class CommentFactory extends Factory
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->safeEmail(),
             'article_id' => Arr::random([1,2,3,4,5]),
+    
         ];
     }
 }

@@ -1,7 +1,7 @@
 
-@extends('template.home')
+@extends('template.user')
 
-@section("home-content")
+@section("content")
 <main class="container col-md-9 mx-auto col-lg-10 w-100">
   
 
@@ -32,6 +32,19 @@
                     <p><small><em>Published : {{$showArticle->publish_date}}</em></small></p>
                     <p><small><em>Author : {{$showArticle->author->first_name.' '.$showArticle->author->last_name}}</em></small></p>
                 </div>
+                
+                    <div class="text-start">
+                            
+                        <form action="{{route('articles.like')}}" id="form-js" class="d-inline-flex mx-2">
+                        
+                            <div id="count-js">{{$showArticle->likes->count()}}</div>
+                            <input type="hidden" name="article-id" value="{{$showArticle->id}}" id="article-id-js">
+                            <button type="submit" style="border-style: none">                            
+                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
+                
             </div>
               
               {{-- <p><em>{{$showArticle->author->first_name.' '.$showArticle->author->last_name}}</em></p> --}}
@@ -42,7 +55,7 @@
 
     <div class="container text-left w-50 m-2">
         <h6>Commentaires</h6>
-        {{-- <form action="/posts/{{ $post->id }}/comments" method="POST" class="mb-0"> --}}
+    
         <form action="{{route('comments.store',['id'=>$showArticle->id])}}" method="post">
             @csrf
             <div class="row my-2 p-2">
@@ -99,19 +112,12 @@
                     <div class="mt-2">
                         <p>{{ $comment->message }}</p>
                     </div> 
-                    
-                    
-                    {{-- <form id="comment-{{$comment->id}}" action="{{route('comments.delete',['id'=>$comment->id])}}" method="post">
-                        @csrf
-                        @method('delete')
 
-                        <button type="submit" onclick="if(confirm('Are you sure to delete this comment?')){document.getElementById('comment-{{$comment->id}}').submit();}" class="border-white bg-white"><i class="bi bi-trash"></i></button>
-                        
-                    </form> --}}
                 </div>    
                     
             @endforeach
         </div>
+        
     </div>
 {{-- </div> --}}
 

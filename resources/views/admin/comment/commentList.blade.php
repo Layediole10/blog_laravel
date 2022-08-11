@@ -11,7 +11,7 @@
           <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
           <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
         </div>
-        <a href="{{route("comments.create")}}" class="btn btn-sm btn-outline-secondary">
+        <a href="#" class="btn btn-sm btn-outline-secondary">
           <i class="bi bi-plus-circle"></i>
             New comment
         </a>
@@ -42,7 +42,7 @@
          <h2>List of comments</h2>
         </div>
       <div class="card-body">
-        {{-- {{$comments->links()}} --}}
+        
        
         <div class="table-responsive table-bordered">
           <table class="table  table-sm">
@@ -54,6 +54,8 @@
                 <th scope="col">Last name</th>
                 <th scope="col">email</th>
                 <th scope="col">Article ID</th>
+                {{-- <th scope="col">Likes</th>
+                <th scope="col">Dislikes</th> --}}
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -67,7 +69,7 @@
                         <td>{{$comment->email}}</td>
                         <td>{{$comment->article_id}}</td>
 
-                        <td>
+                        {{-- <td>
                             <a href="{{route('comments.edit', ['comment'=>$comment->id])}}" class="btn btn-success btn-sm" title="Edit"> <i class="bi bi-pencil"></i></a>               
 
                             <a href="#" class="btn btn-danger btn-sm" title="Delete" onclick="if(confirm('Are you sure you want to delete this comment?')){document.getElementById('form-{{$comment->id}}').submit()}"> <i class="bi bi-trash"></i></a>
@@ -76,13 +78,14 @@
                                 @csrf
                                 <input type="hidden" name="_method" value="delete">
                             </form>
-                        </td>
+                        </td> --}}
                     </tr>
                 @endforeach
              
             </tbody>
           </table>
         </div>
+        {{$comments->links()}}
       </div>
     </div>
 </main>

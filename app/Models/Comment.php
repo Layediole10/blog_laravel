@@ -14,7 +14,7 @@ class Comment extends Model
         'first_name',
         'last_name',
         'email',
-        'article_id'
+        'article_id',
     ];
 
     /**
@@ -24,5 +24,13 @@ class Comment extends Model
      */
     public function article(){
         return $this->belongsTo(Article::class);
+    }
+
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
+
+    public function dislikes(){
+        return $this->hasMany(Dislike::class);
     }
 }

@@ -27,11 +27,19 @@ class Article extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
     /**
      * @return 
      */
     
     public function author(){
         return $this->belongsTo(User::class);
+    }
+
+    public function isLikedByLoggedInUser(){
+
+        return $this->likes->where('user_id', auth()->user()->id)->isEmpty() ? false: true;
     }
 }

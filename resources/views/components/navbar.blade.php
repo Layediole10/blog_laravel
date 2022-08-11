@@ -27,19 +27,17 @@
                       <strong>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</strong>
                     </a>
                 @endif
-            </li>
-          @endauth
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
-          </li>
 
-          @auth
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
+            </li>
 
             <li class="nav-item">
               <a class="nav-link" href="/admin/articles">Articles</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/">Dashbord</a>
+              <a class="nav-link" href="{{route('dashbord')}}">Dashbord</a>
             </li>  
             <li class="nav-item">
                 <a class="nav-link btn btn-danger" href="{{route('logout')}}">Logout</a>
@@ -47,6 +45,10 @@
           @endauth
           
           @guest
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('users.create')}}">Sign in</a>
+            </li>
+
             <li class="nav-item">
               <a class="nav-link" href="{{route('login')}}">Login</a>
             </li>

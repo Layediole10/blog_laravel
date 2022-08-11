@@ -58,6 +58,7 @@
                 <th scope="col">Id_author</th>
                 <th scope="col">Publish Date</th>
                 <th scope="col">Published</th>
+                <th scope="col">Likes</th>
                 <th scope="col">Photo</th>
                 <th scope="col">Actions</th>
               </tr>
@@ -81,6 +82,7 @@
                   @method('put')
                 </form> 
               </td>
+              <td>{{$article->likes->count()}}</td>
               <td>
                 @if ($article->photo)
                     @if (Str::contains($article->photo, 'https://'))
