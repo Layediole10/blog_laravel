@@ -16,6 +16,15 @@ class ArticleController extends Controller
         return view('article', ['articleList'=>$articleList]);
     }
 
+    public function commentArticle($id){
+        $article = Article::find($id);
+        if ( $article) {
+            $comment = $article->comments;
+            return response($comment, '201');
+        }
+        return response(['error'=>'article not found'], '404');
+    }
+
     public function show($id)
     {
         $showArticle = Article::findOrFail($id);

@@ -53,6 +53,12 @@
               @enderror
             </div>
           </div>
+          <div class="row my-2">
+            {{-- <div class="col">
+              <div class="form-group">
+                <input type="hidden" class="form-control" name="author_id" id="title" value="{{Auth::user()->id}}" >
+              </div>
+            </div> --}}
 
           <div class="row my-2">
             <div class="col">

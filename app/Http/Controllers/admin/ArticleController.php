@@ -126,7 +126,7 @@ class ArticleController extends Controller
 
         $editAticle = $valid;
         $editAticle['publish'] = $request->publish?true:false;
-        $editAticle['id_author'] = Auth::user()->id;
+        $editAticle['author_id'] = Auth::user()->id;
         $editAticle['title'] = $request->title;
         $editAticle['description']= $request->description;
 
